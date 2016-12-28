@@ -11,7 +11,7 @@ Jasmine test output at the end of the web page.
 The following conditions are tested during the Jasmine tests.
 
  - Test the `allFeeds` object and ensures the URL and name are defined.
- - Test menu element is hidden by default and changes visibility when the
+ - Test yjr menu element is hidden by default and changes visibility when the
    menu icon is clicked.
  - Test the `loadFeed` function works and has at least a single `.entry`
    element within the `.feed` container.
