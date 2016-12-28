@@ -10,9 +10,9 @@
  */
 $(function() {
     /* This is our first test suite - a test suite just contains
-    * a related set of tests. This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
-    */
+     * a related set of tests. This suite is all about the RSS
+     * feeds definitions, the allFeeds variable in our application.
+     */
     describe('RSS Feeds', function() {
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
@@ -31,9 +31,9 @@ $(function() {
          * and that the URL is not empty.
          */
         it('elements URLs are defined', function() {
-          allFeeds.forEach(function(feed) {
-            expect(feed.url).toBeTruthy();
-          });
+            allFeeds.forEach(function(feed) {
+                expect(feed.url).toBeTruthy();
+            });
         });
 
 
@@ -41,11 +41,11 @@ $(function() {
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-         it('elements URLs are defined', function() {
-           allFeeds.forEach (function(feed) {
-             expect(feed.name).toBeTruthy();
-           });
-         });
+        it('elements URLs are defined', function() {
+            allFeeds.forEach(function(feed) {
+                expect(feed.name).toBeTruthy();
+            });
+        });
     });
 
 
@@ -55,23 +55,22 @@ $(function() {
         /* Test that ensures the menu element is
          * hidden by default.
          */
-         it('is hidden by default', function() {
-             var hidden = $('body .menu-hidden');
-             expect(hidden.length).toBe(0);
-         });
+        it('is hidden by default', function() {
+            expect(document.body.className).toContain('menu-hidden');
+        });
 
-         /* Test that ensures the menu changes
-          * visibility when the menu icon is clicked. The test
-          * has two expectations: that the menu display when
-          * clicked and it hides when clicked again.
-          */
-          it('visibility on and off', function() {
-              var menuIcon = $('.menu-icon-link');
-              menuIcon.click();
-              expect(document.body.className).not.toContain('menu-hidden');
-              menuIcon.click();
-              expect(document.body.className).toContain('menu-hidden');
-          });
+        /* Test that ensures the menu changes
+         * visibility when the menu icon is clicked. The test
+         * has two expectations: that the menu display when
+         * clicked and it hides when clicked again.
+         */
+        it('visibility on and off', function() {
+            var menuIcon = $('.menu-icon-link');
+            menuIcon.click();
+            expect(document.body.className).not.toContain('menu-hidden');
+            menuIcon.click();
+            expect(document.body.className).toContain('menu-hidden');
+        });
     });
 
     /* Test suite named "Initial Entries" */
@@ -83,14 +82,13 @@ $(function() {
          * loadFeed() is asynchronous so this test requires
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-         beforeEach(function (done) {
-           loadFeed(0, done);
-         });
+        beforeEach(function(done) {
+            loadFeed(0, done);
+        });
 
-         it('non zero', function (done) {
-           expect($('.feed .entry').length).toBeGreaterThan(0);
-           done();
-         });
+        it('non zero', function() {
+            expect($('.feed .entry').length).toBeGreaterThan(0);
+        });
 
     });
 
@@ -102,18 +100,22 @@ $(function() {
          * loadFeed() is asynchronous.
          */
         var entriesBeforeNewFeed;
-        beforeEach(function (done) {
-          loadFeed(0, done);
-          entriesBeforeNewFeed = $('.feed .entry');
-          loadFeed(1, done);
+        beforeEach(function(done) {
+            loadFeed(1, done);
         });
 
-        it('different than pervious feed', function (done) {
-          var entriesAfterNewFeed = $('.feed .entry');
-          expect(entriesBeforeNewFeed.length).toBeGreaterThan(0);
-          expect(entriesAfterNewFeed.length).toBeGreaterThan(0);
-          expect(entriesBeforeNewFeed[0].innerText).not.toBe(entriesAfterNewFeed[0].innerText);
-          done();
+        describe('save old feed and load new feed', function() {
+          beforeEach(function(done) {
+              entriesBeforeNewFeed = $('.feed .entry');
+              loadFeed(2, done);
+          });
+
+          it('different than pervious feed', function() {
+              var entriesAfterNewFeed = $('.feed .entry');
+              expect(entriesBeforeNewFeed.length).toBeGreaterThan(0);
+              expect(entriesAfterNewFeed.length).toBeGreaterThan(0);
+              expect(entriesBeforeNewFeed[0].innerText.trim()).not.toBe(entriesAfterNewFeed[0].innerText.trim());
+          });
         });
     });
 }());
